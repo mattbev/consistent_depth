@@ -93,7 +93,7 @@ class COLMAPProcessor:
             '--database_path', self.db_path(args.workspace_path),
             '--image_path', args.image_path,
             '--ImageReader.camera_model', args.camera_model,
-            '--ImageReader.single_camera', '1'
+            '--ImageReader.single_camera', '1',
         ]
         if args.camera_params:
             cmd.extend(['--ImageReader.camera_params', args.camera_params])
@@ -103,7 +103,9 @@ class COLMAPProcessor:
 
         if args.initialize_pose:
             cmd.extend(['--SiftExtraction.num_threads', '1'])
-            cmd.extend(['--SiftExtraction.gpu_index', '0'])
+            cmd.extend(['--SiftExtraction.gpu_index', '0,1,2,3'])
+
+        cmd.extend(['--SiftExtraction.use_gpu=false']) #mattbev
 
         run(cmd)
 
@@ -119,6 +121,10 @@ class COLMAPProcessor:
                 '--SequentialMatching.overlap', '50',
                 '--SequentialMatching.quadratic_overlap', '0',
             ])
+
+        cmd.extend(['--SiftMatching.use_gpu', 'false']) #mattbev
+        #cmd.extend(['--SiftMatching.gpu_index', '0,1,2,3']) #mattbev
+        #cmd.extend(['--SiftMatching.num_threads=100']) #mattbev
         run(cmd)
 
     def triangulate(self, args):
@@ -151,7 +157,7 @@ class COLMAPProcessor:
         os.makedirs(sparse_dir, exist_ok=True)
         cmd = [
             self.colmap_bin,
-            'mapper',
+            'hierarchical_mapper', #'mapper', #mattbev
             '--database_path', self.db_path(args.workspace_path),
             '--image_path', args.image_path,
             '--output_path', sparse_dir,
@@ -166,6 +172,10 @@ class COLMAPProcessor:
                 '--Mapper.ba_refine_focal_length', '0',
                 '--Mapper.ba_refine_extra_params', '0',
             ])
+
+        #cmd.extend(['--Mapper.ba_global_use_pba', '1']) #mattbev
+        #cmd.extend(['--Mapper.ba_global_pba_gpu_index', '1']) #mattbev
+
         run(cmd)
 
     def dense(self, recon_model: str, args):
