@@ -157,7 +157,8 @@ class COLMAPProcessor:
         os.makedirs(sparse_dir, exist_ok=True)
         cmd = [
             self.colmap_bin,
-            'hierarchical_mapper', #'mapper', #mattbev
+            'mapper',
+            #'hierarchical_mapper', #mattbev
             '--database_path', self.db_path(args.workspace_path),
             '--image_path', args.image_path,
             '--output_path', sparse_dir,
@@ -204,6 +205,8 @@ class COLMAPProcessor:
             '--workspace_format', "COLMAP",
             '--PatchMatchStereo.max_image_size', str(args.dense_max_size),
         ]
+        cmd.extend(['--PatchMatchStereo.gpu_index', '3']) #mattbev
+        #cmd.extend(['--PatchMatchStereo.cache_size', '16']) #mattbev
         run(cmd)
 
     @staticmethod

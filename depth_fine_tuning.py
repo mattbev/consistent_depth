@@ -153,6 +153,7 @@ class DepthFineTuner:
         self.model = model()
 
         num_gpus = torch.cuda.device_count()
+        num_gpus = 1
         print(f"Using {num_gpus} GPUs.")
         if num_gpus > 1:
             self.params.batch_size *= num_gpus
