@@ -1,6 +1,8 @@
  # Env Params
  Eigen: 3.3.9
+ 
  Ceres-Solver: 97873ea (w/ -DEigen3_DIR=<eigenpath>)
+ 
  Colmap: dev-3.6 (w/ -DEigen3_DIR=<eigenpath>)
  
  
