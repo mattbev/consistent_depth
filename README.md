@@ -1,3 +1,11 @@
+ # Env Params
+ Eigen: 3.3.9
+ 
+ Ceres-Solver: 97873ea (w/ -DEigen3_DIR=<eigenpath>)
+ 
+ Colmap: dev-3.6 (w/ -DEigen3_DIR=<eigenpath>)
+ 
+ 
  # [SIGGRAPH 2020] Consistent Video Depth Estimation
  
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1i5_uVHWOJlh2adRFT5BuDhoRftq9Oosx#scrollTo=lNc6HHfHDfnE)
