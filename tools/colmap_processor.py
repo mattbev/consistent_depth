@@ -54,6 +54,9 @@ class COLMAPParams:
             "--matcher", choices=["exhaustive", "sequential"], default="exhaustive",
             help="COLMAP matcher ('exhaustive' or 'sequential')"
         )
+        parser.add_argument(
+            "--gpu_index", help="which GPU(s) to use?", default=None
+        )
 
     def parse_args(self, args=None, namespace=None):
         return self.parser.parse_args(args, namespace=namespace)
@@ -123,8 +126,7 @@ class COLMAPProcessor:
             ])
 
         cmd.extend(['--SiftMatching.use_gpu', 'false']) #mattbev
-        #cmd.extend(['--SiftMatching.gpu_index', '0,1,2,3']) #mattbev
-        #cmd.extend(['--SiftMatching.num_threads=100']) #mattbev
+
         run(cmd)
 
     def triangulate(self, args):
@@ -205,7 +207,9 @@ class COLMAPProcessor:
             '--workspace_format', "COLMAP",
             '--PatchMatchStereo.max_image_size', str(args.dense_max_size),
         ]
-        cmd.extend(['--PatchMatchStereo.gpu_index', '3']) #mattbev
+
+        if args.gpu_index is not None:
+            cmd.extend(['--PatchMatchStereo.gpu_index', args.gpu_index]) #mattbev
         #cmd.extend(['--PatchMatchStereo.cache_size', '16']) #mattbev
         run(cmd)
 

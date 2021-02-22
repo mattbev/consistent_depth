@@ -15,5 +15,5 @@ done
 
 sudo mkdir -p "${destination}"
 
-sudo python3 main.py --video_file "${source}" --path "${destination}" --camera_model "${camera_model}" --camera_params "${camera_params}" --matcher "sequential" --model_type "monodepth2" --make_video
+sudo python3 main.py --video_file "${source}" --path "${destination}" --camera_model "${camera_model}" --camera_params "${camera_params}" --matcher "sequential" --model_type "monodepth2" --gpu_index "1" --make_video
 
